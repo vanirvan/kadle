@@ -1,111 +1,87 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
+@import "material-symbols/outlined.css";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@theme {
+    --font-sans:
+        "Google Sans", "Roboto", "Noto Sans JP", system-ui, -apple-system,
+        BlinkMacSystemFont, sans-serif;
+    --font-japanese:
+        "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo,
+        sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Google Blue Scale */
+    --color-google-blue-50: #e8f0fe;
+    --color-google-blue-100: #d2e3fc;
+    --color-google-blue-200: #aecbfa;
+    --color-google-blue-300: #8ab4f8;
+    --color-google-blue-400: #669df6;
+    --color-google-blue-500: #4285f4;
+    --color-google-blue-600: #1a73e8;
+    --color-google-blue-700: #1967d2;
+    --color-google-blue-800: #185abc;
+    --color-google-blue-900: #174ea6;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+    /* Google Red Scale */
+    --color-google-red-50: #fce8e6;
+    --color-google-red-100: #fad2cf;
+    --color-google-red-200: #f6aea9;
+    --color-google-red-300: #f28b82;
+    --color-google-red-400: #ee675c;
+    --color-google-red-500: #ea4335;
+    --color-google-red-600: #d93025;
+    --color-google-red-700: #c5221f;
+    --color-google-red-800: #b31412;
+    --color-google-red-900: #a50e0e;
+
+    /* Google Yellow Scale */
+    --color-google-yellow-50: #fef7e0;
+    --color-google-yellow-100: #feefc3;
+    --color-google-yellow-200: #fde293;
+    --color-google-yellow-300: #fdd663;
+    --color-google-yellow-400: #fcc934;
+    --color-google-yellow-500: #fbbc04;
+    --color-google-yellow-600: #f9ab00;
+    --color-google-yellow-700: #e37400;
+    --color-google-yellow-800: #ea8600;
+    --color-google-yellow-900: #e25100;
+
+    /* Google Green Scale */
+    --color-google-green-50: #e6f4ea;
+    --color-google-green-100: #ceead6;
+    --color-google-green-200: #a8dab5;
+    --color-google-green-300: #81c995;
+    --color-google-green-400: #5bb974;
+    --color-google-green-500: #34a853;
+    --color-google-green-600: #1e8e3e;
+    --color-google-green-700: #188038;
+    --color-google-green-800: #137333;
+    --color-google-green-900: #0d652d;
+
+    /* Google Grey Scale */
+    --color-google-grey-50: #f8f9fa;
+    --color-google-grey-100: #f1f3f4;
+    --color-google-grey-200: #e8eaed;
+    --color-google-grey-300: #dadce0;
+    --color-google-grey-400: #bdc1c6;
+    --color-google-grey-500: #9aa0a6;
+    --color-google-grey-600: #80868b;
+    --color-google-grey-700: #5f6368;
+    --color-google-grey-800: #3c4043;
+    --color-google-grey-900: #202124;
+
+    /* Primary Brand Shortcuts */
+    --color-google-blue: #4285f4;
+    --color-google-red: #ea4335;
+    --color-google-yellow: #fbbc04;
+    --color-google-green: #34a853;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+@layer base {
+    :root {
+        color-scheme: light dark;
+    }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+    body {
+        @apply font-sans antialiased bg-white text-google-grey-900 dark:bg-google-grey-900 dark:text-google-grey-100 min-h-svh;
+    }
 }
