@@ -1,9 +1,7 @@
-import { cn } from "@/lib/utils";
+import { DrawingCanvas } from "@/components/DrawingCanvas";
 
 export function App() {
-  return (
-    <span className={cn("font-bold", "text-google-blue-600")}>Acumalaka</span>
-  );
+  return <DrawingCanvas />;
 }
 
 export default App;
