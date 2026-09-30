@@ -74,11 +74,11 @@ export function DeckSelectorModal({
       <Dialog.Trigger
         aria-label="Pilih Deck Huruf"
         className={cn(
-          "fixed top-4 right-4 sm:top-6 sm:right-6 z-20",
-          "flex items-center gap-2 px-3 py-1.5",
+          "fixed top-3 right-3 sm:top-5 sm:right-6 z-20",
+          "flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5",
           "bg-white/95 dark:bg-google-grey-800/95 backdrop-blur-md",
           "border border-google-grey-200 dark:border-google-grey-700",
-          "rounded-full transition-all duration-200 active:scale-95 cursor-pointer",
+          "rounded-full transition-all duration-200 active:scale-95 cursor-pointer shadow-xs",
           "text-google-grey-800 dark:text-google-grey-100 hover:bg-google-grey-100 dark:hover:bg-google-grey-700",
           "text-xs sm:text-sm font-medium",
         )}

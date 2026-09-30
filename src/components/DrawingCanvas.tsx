@@ -1,4 +1,11 @@
-import { useRef, useEffect, useCallback, useState } from "react";
+import {
+  useRef,
+  useEffect,
+  useCallback,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { FloatingToolbar } from "@/components/FloatingToolbar";
 
 export interface Point {
@@ -10,6 +17,15 @@ export interface Point {
 export interface Stroke {
   points: Point[];
   color?: string;
+}
+
+export interface DrawingCanvasRef {
+  clear: () => void;
+  getCanvas: () => HTMLCanvasElement | null;
+}
+
+export interface DrawingCanvasProps {
+  className?: string;
 }
 
 const EMPTY_STROKES: Stroke[] = [];
@@ -27,7 +43,8 @@ function setupContext(ctx: CanvasRenderingContext2D, dpr: number) {
  * Full-screen drawing canvas using PointerEvents with Undo, Redo,
  * and Clear All support.
  */
-export function DrawingCanvas() {
+export const DrawingCanvas = forwardRef<DrawingCanvasRef, DrawingCanvasProps>(
+  function DrawingCanvas(_props, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const currentStroke = useRef<Stroke | null>(null);
@@ -157,6 +174,15 @@ export function DrawingCanvas() {
     setHistoryIndex(nextHistory.length - 1);
     redrawStrokes([]);
   }, [currentStrokes.length, history, historyIndex, redrawStrokes]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      clear: handleClear,
+      getCanvas: () => canvasRef.current,
+    }),
+    [handleClear],
+  );
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -302,4 +328,4 @@ export function DrawingCanvas() {
       />
     </div>
   );
-}
+});
