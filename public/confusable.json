@@ -1,0 +1,475 @@
+[
+ {
+  "chars": [
+   "へ",
+   "ヘ"
+  ],
+  "n": 113,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+3078",
+   "U+30D8"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "タ",
+   "夕"
+  ],
+  "n": 98,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+30BF",
+   "U+5915"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "ニ",
+   "二"
+  ],
+  "n": 87,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+30CB",
+   "U+4E8C"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "エ",
+   "工"
+  ],
+  "n": 85,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+30A8",
+   "U+5DE5"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "え",
+   "之"
+  ],
+  "n": 53,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+3048",
+   "U+4E4B"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "カ",
+   "力"
+  ],
+  "n": 51,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+30AB",
+   "U+529B"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "千",
+   "干"
+  ],
+  "n": 27,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+5343",
+   "U+5E72"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "里",
+   "黒"
+  ],
+  "n": 20,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+91CC",
+   "U+9ED2"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "き",
+   "キ"
+  ],
+  "n": 19,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+304D",
+   "U+30AD"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "兆",
+   "北"
+  ],
+  "n": 18,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+5146",
+   "U+5317"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "占",
+   "点"
+  ],
+  "n": 18,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+5360",
+   "U+70B9"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "ロ",
+   "口"
+  ],
+  "n": 17,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+30ED",
+   "U+53E3"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "角",
+   "魚"
+  ],
+  "n": 15,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+89D2",
+   "U+9B5A"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "え",
+   "ス"
+  ],
+  "n": 13,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3048",
+   "U+30B9"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "未",
+   "末"
+  ],
+  "n": 10,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+672A",
+   "U+672B"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "チ",
+   "千"
+  ],
+  "n": 9,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+30C1",
+   "U+5343"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "う",
+   "つ"
+  ],
+  "n": 8,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3046",
+   "U+3064"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "悲",
+   "非"
+  ],
+  "n": 8,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+60B2",
+   "U+975E"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "り",
+   "リ"
+  ],
+  "n": 8,
+  "sources": [
+   "etl8g",
+   "test"
+  ],
+  "codepoints": [
+   "U+308A",
+   "U+30EA"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "ニ",
+   "三"
+  ],
+  "n": 7,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+30CB",
+   "U+4E09"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "勺",
+   "夕"
+  ],
+  "n": 7,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+52FA",
+   "U+5915"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "こ",
+   "ご"
+  ],
+  "n": 6,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3053",
+   "U+3054"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "典",
+   "曲"
+  ],
+  "n": 6,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+5178",
+   "U+66F2"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "態",
+   "熊"
+  ],
+  "n": 6,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+614B",
+   "U+718A"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "昭",
+   "照"
+  ],
+  "n": 6,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+662D",
+   "U+7167"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "う",
+   "フ"
+  ],
+  "n": 5,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3046",
+   "U+30D5"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "く",
+   "ぐ"
+  ],
+  "n": 5,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+304F",
+   "U+3050"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "ご",
+   "づ"
+  ],
+  "n": 5,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3054",
+   "U+3065"
+  ],
+  "cross_script": false
+ },
+ {
+  "chars": [
+   "ぢ",
+   "七"
+  ],
+  "n": 5,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3062",
+   "U+4E03"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "べ",
+   "ヘ"
+  ],
+  "n": 5,
+  "sources": [
+   "etl8g"
+  ],
+  "codepoints": [
+   "U+3079",
+   "U+30D8"
+  ],
+  "cross_script": true
+ },
+ {
+  "chars": [
+   "帥",
+   "師"
+  ],
+  "n": 3,
+  "sources": [
+   "test"
+  ],
+  "codepoints": [
+   "U+5E25",
+   "U+5E2B"
+  ],
+  "cross_script": false
+ }
+]

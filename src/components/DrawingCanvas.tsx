@@ -22,6 +22,7 @@ export interface Stroke {
 export interface DrawingCanvasRef {
   clear: () => void;
   getCanvas: () => HTMLCanvasElement | null;
+  getStrokes: () => Stroke[];
 }
 
 export interface DrawingCanvasProps {
@@ -180,6 +181,7 @@ export const DrawingCanvas = forwardRef<DrawingCanvasRef, DrawingCanvasProps>(
     () => ({
       clear: handleClear,
       getCanvas: () => canvasRef.current,
+      getStrokes: () => currentStrokesRef.current,
     }),
     [handleClear],
   );

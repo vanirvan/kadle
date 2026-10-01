@@ -177,13 +177,8 @@ export function useKanaQuiz({ mode, activeItems }: UseKanaQuizProps) {
   }, []);
 
   // Mock verification (pre-AI integration)
-  const verifyDrawing = useCallback(() => {
-    const mockScore = Math.floor(Math.random() * 11) + 89;
-    setFeedback({
-      status: "correct",
-      message: "Bagus banget! Goresanmu rapi.",
-      score: mockScore,
-    });
+  const setEvaluationFeedback = useCallback((result: QuizFeedback | null) => {
+    setFeedback(result);
   }, []);
 
   const clearFeedback = useCallback(() => {
@@ -201,7 +196,7 @@ export function useKanaQuiz({ mode, activeItems }: UseKanaQuizProps) {
     showHint,
     toggleHint,
     feedback,
-    verifyDrawing,
+    setEvaluationFeedback,
     clearFeedback,
     nextQuestion,
     availableVocabCount,

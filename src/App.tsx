@@ -6,8 +6,11 @@ import { CheckActionButton } from "@/components/CheckActionButton";
 import { useKanaDeck } from "@/hooks/useKanaDeck";
 import { useKanaQuiz } from "@/hooks/useKanaQuiz";
 
+import { evaluateDrawing, initAiEngine } from "@/services/aiEngine";
+
 export function App() {
   const canvasRef = React.useRef<DrawingCanvasRef>(null);
+  const [isChecking, setIsChecking] = React.useState(false);
 
   const deck = useKanaDeck();
   const quiz = useKanaQuiz({
@@ -15,13 +18,53 @@ export function App() {
     activeItems: deck.activeItems,
   });
 
+  // Pre-warm the ONNX AI engine in background on mount
+  React.useEffect(() => {
+    initAiEngine().catch((err) => {
+      console.warn("AI engine prewarm warning:", err);
+    });
+  }, []);
+
   const handleNextQuestion = React.useCallback(() => {
     canvasRef.current?.clear();
     quiz.nextQuestion();
   }, [quiz]);
 
-  const handleCheck = React.useCallback(() => {
-    quiz.verifyDrawing();
+  const handleRetry = React.useCallback(() => {
+    quiz.clearFeedback();
+  }, [quiz]);
+
+  const handleCheck = React.useCallback(async () => {
+    if (!quiz.question) return;
+    const strokes = canvasRef.current?.getStrokes() ?? [];
+
+    if (strokes.length === 0) {
+      quiz.setEvaluationFeedback({
+        status: "try_again",
+        score: 0,
+        message: "Kanvas masih kosong. Tulis hurufnya dulu ya!",
+      });
+      return;
+    }
+
+    setIsChecking(true);
+    try {
+      const result = await evaluateDrawing(strokes, quiz.question.characters);
+      quiz.setEvaluationFeedback({
+        status: result.status,
+        score: result.score,
+        message: result.message,
+      });
+    } catch (err) {
+      console.error("AI inference error:", err);
+      quiz.setEvaluationFeedback({
+        status: "try_again",
+        score: 0,
+        message: "Terjadi kesalahan saat memeriksa tulisan.",
+      });
+    } finally {
+      setIsChecking(false);
+    }
   }, [quiz]);
 
   return (
@@ -67,8 +110,10 @@ export function App() {
       {/* Floating Check Button (Bottom Right) */}
       <CheckActionButton
         feedback={quiz.feedback}
+        isLoading={isChecking}
         onCheck={handleCheck}
         onNext={handleNextQuestion}
+        onRetry={handleRetry}
       />
     </main>
   );
