@@ -117,7 +117,7 @@ async function fetchModelBufferWithProgress(): Promise<ArrayBuffer> {
 
   const response = await fetch(MODEL_URL);
   if (!response.ok) {
-    throw new Error(`Gagal mengunduh model.fp16.onnx (${response.status})`);
+    throw new Error(`Failed to download model.fp16.onnx (${response.status})`);
   }
 
   const contentLength = response.headers.get("content-length");
@@ -202,7 +202,7 @@ export async function initAiEngine(): Promise<void> {
     try {
       // Load labels
       const labelsRes = await fetch("/labels.json");
-      if (!labelsRes.ok) throw new Error("Gagal mengunduh labels.json");
+      if (!labelsRes.ok) throw new Error("Failed to download labels.json");
       labels = (await labelsRes.json()) as LabelEntry[];
 
       // Load confusable pairs
@@ -244,7 +244,7 @@ export async function initAiEngine(): Promise<void> {
       initPromise = null;
       updateProgress({
         status: "error",
-        error: err instanceof Error ? err.message : "Gagal memuat AI",
+        error: err instanceof Error ? err.message : "Failed to load AI",
       });
       throw err;
     } finally {
@@ -477,7 +477,7 @@ export async function evaluateDrawing(
     return {
       status: "try_again",
       score: 0,
-      message: "Kanvas masih kosong. Tulis hurufnya dulu ya!",
+      message: "Canvas is empty. Draw the characters first!",
       details: [],
     };
   }
@@ -485,7 +485,7 @@ export async function evaluateDrawing(
   await initAiEngine();
 
   if (!session || !labels) {
-    throw new Error("Model AI belum siap. Coba beberapa saat lagi.");
+    throw new Error("AI model is not ready yet. Please wait a moment.");
   }
 
   const targetCount = expectedCharacters.length;
@@ -576,10 +576,10 @@ export async function evaluateDrawing(
 
   if (allMatched && finalScore >= 70) {
     const compliments = [
-      "Bagus banget! Goresanmu sangat rapi.",
-      "Luar biasa! Tulisan kanamu sangat presisi.",
-      "Keren! Bentuk karakternya pas sekali.",
-      "Mantap! Terus pertahankan kelancaran tulisanmu.",
+      "Great job! Your strokes are very neat.",
+      "Awesome! Your kana writing is very precise.",
+      "Nice! The character shape looks spot on.",
+      "Excellent! Keep up the smooth strokes.",
     ];
     const message = compliments[Math.floor(Math.random() * compliments.length)];
     return {
@@ -595,14 +595,14 @@ export async function evaluateDrawing(
     .map((d, index) => ({ detail: d, index: index + 1 }))
     .filter((item) => !item.detail.isMatch);
 
-  let failureMessage = "Bentuk goresan belum sesuai. Coba perhatikan petunjuk hurufnya ya!";
+  let failureMessage = "Stroke shape does not match. Check the kana hint and try again!";
   if (mismatches.length > 0) {
     const firstMismatch = mismatches[0];
-    const charLabel = targetCount > 1 ? `huruf ke-${firstMismatch.index}` : "huruf";
+    const charLabel = targetCount > 1 ? `character #${firstMismatch.index}` : "character";
     if (!firstMismatch.detail.predictedChar) {
-      failureMessage = targetCount > 1 ? `Huruf ke-${firstMismatch.index} belum ditulis.` : "Huruf belum ditulis.";
+      failureMessage = targetCount > 1 ? `Character #${firstMismatch.index} has not been drawn yet.` : "Character has not been drawn yet.";
     } else {
-      failureMessage = `AI mendeteksi ${charLabel} sebagai '${firstMismatch.detail.predictedChar}'.`;
+      failureMessage = `AI recognized ${charLabel} as '${firstMismatch.detail.predictedChar}'.`;
     }
   }
 

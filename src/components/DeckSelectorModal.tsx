@@ -28,10 +28,10 @@ export interface DeckSelectorModalProps {
 type CategoryFilter = "all" | KanaCategory;
 
 const CATEGORY_TABS: { key: CategoryFilter; label: string }[] = [
-  { key: "all", label: "Semua" },
-  { key: "main", label: "Dasar" },
+  { key: "all", label: "All" },
+  { key: "main", label: "Basic" },
   { key: "dakuon", label: "Dakuon" },
-  { key: "combo", label: "Kombinasi" },
+  { key: "combo", label: "Combo" },
 ];
 
 export function DeckSelectorModal({
@@ -72,7 +72,7 @@ export function DeckSelectorModal({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       {/* Floating Trigger at Top-Right */}
       <Dialog.Trigger
-        aria-label="Pilih Deck Huruf"
+        aria-label="Select Kana Deck"
         className={cn(
           "fixed top-3 right-3 sm:top-5 sm:right-6 z-20",
           "flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5",
@@ -114,15 +114,15 @@ export function DeckSelectorModal({
             <div className="flex items-center justify-between gap-2 mb-3">
               <div>
                 <Dialog.Title className="text-base sm:text-lg font-bold text-google-grey-900 dark:text-google-grey-100">
-                  Pilih Huruf Latihan
+                  Select Practice Kana
                 </Dialog.Title>
                 <Dialog.Description className="text-xs text-google-grey-500 dark:text-google-grey-400 mt-0.5">
-                  Pilih huruf Dasar, Dakuon (゛゜), atau Kombinasi (Yōon)
+                  Choose Basic, Dakuon (゛゜), or Combination (Yōon) characters
                 </Dialog.Description>
               </div>
 
               <Dialog.Close
-                aria-label="Tutup"
+                aria-label="Close"
                 className="w-8 h-8 flex items-center justify-center rounded-lg text-google-grey-500 hover:text-google-grey-900 dark:hover:text-google-grey-100 hover:bg-google-grey-100 dark:hover:bg-google-grey-800 transition-all cursor-pointer"
               >
                 <CloseIcon className="w-5 h-5" />
@@ -185,7 +185,7 @@ export function DeckSelectorModal({
                 <strong className="text-google-blue-600 dark:text-google-blue-400">
                   {selectedCount}
                 </strong>{" "}
-                dari {totalCount} huruf dipilih
+                of {totalCount} characters selected
               </span>
 
               <div className="flex items-center gap-2">
@@ -194,7 +194,7 @@ export function DeckSelectorModal({
                   onClick={onSelectAll}
                   className="text-google-blue-600 dark:text-google-blue-400 hover:underline font-medium cursor-pointer"
                 >
-                  Pilih Semua ({totalCount})
+                  Select All ({totalCount})
                 </button>
                 <span className="text-google-grey-300 dark:text-google-grey-700">
                   •
@@ -227,7 +227,7 @@ export function DeckSelectorModal({
                       onClick={() => onToggleRow(row.key)}
                       className="text-[11px] font-medium text-google-blue-600 dark:text-google-blue-400 hover:underline cursor-pointer"
                     >
-                      {isAllRowSelected ? "Batalkan Baris" : "Pilih Baris"}
+                      {isAllRowSelected ? "Deselect Row" : "Select Row"}
                     </button>
                   </div>
 
@@ -306,11 +306,11 @@ export function DeckSelectorModal({
           <div className="p-4 sm:p-5 border-t border-google-grey-200 dark:border-google-grey-800 bg-google-grey-50/80 dark:bg-google-grey-900/80 flex-shrink-0 flex items-center justify-between gap-3">
             {selectedCount === 0 ? (
               <span className="text-xs text-google-red-500 font-medium">
-                Pilih minimal 1 huruf untuk mulai
+                Select at least 1 character to start
               </span>
             ) : (
               <span className="text-xs text-google-grey-500 dark:text-google-grey-400">
-                Latihan siap dimulai
+                Ready to practice
               </span>
             )}
 
@@ -323,7 +323,7 @@ export function DeckSelectorModal({
                   : "bg-google-grey-200 dark:bg-google-grey-800 text-google-grey-400 dark:text-google-grey-600 cursor-not-allowed opacity-60",
               )}
             >
-              Mulai Latihan ({selectedCount} Huruf)
+              Start Practice ({selectedCount} Characters)
             </Dialog.Close>
           </div>
         </Dialog.Popup>

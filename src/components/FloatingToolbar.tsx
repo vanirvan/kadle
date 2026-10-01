@@ -109,7 +109,7 @@ export function FloatingToolbar({
         <Toolbar.Separator className="w-px h-4 bg-google-grey-200 dark:bg-google-grey-700 mx-0.5" />
 
         <ToolbarAction
-          label="Hapus Semua"
+          label="Clear All"
           icon={<DeleteIcon className="w-4 h-4" />}
           onClick={onClear}
           disabled={!canUndo}

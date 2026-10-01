@@ -43,7 +43,7 @@ export function App() {
       quiz.setEvaluationFeedback({
         status: "try_again",
         score: 0,
-        message: "Kanvas masih kosong. Tulis hurufnya dulu ya!",
+        message: "Canvas is empty. Draw the characters first!",
       });
       return;
     }
@@ -61,7 +61,7 @@ export function App() {
       quiz.setEvaluationFeedback({
         status: "try_again",
         score: 0,
-        message: "Terjadi kesalahan saat memeriksa tulisan.",
+        message: "An error occurred while evaluating your drawing.",
       });
     } finally {
       setIsChecking(false);

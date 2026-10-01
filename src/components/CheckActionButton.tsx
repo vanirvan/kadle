@@ -58,10 +58,10 @@ export function CheckActionButton({
               )}
             >
               {feedback.score !== undefined
-                ? `${feedback.score}% Akurat`
+                ? `${feedback.score}% Accurate`
                 : isCorrect
-                  ? "Benar!"
-                  : "Belum Tepat"}
+                  ? "Correct!"
+                  : "Keep Trying"}
             </span>
             <span className="text-[11px] text-google-grey-600 dark:text-google-grey-300 truncate">
               {feedback.message}
@@ -69,7 +69,7 @@ export function CheckActionButton({
           </div>
         </div>
 
-        {/* Action Button: Only 'Coba Lagi' when incorrect, and 'Lanjut' when correct */}
+        {/* Action Button: Only 'Try Again' when incorrect, and 'Next' when correct */}
         {!isCorrect ? (
           <div className="w-full sm:w-auto flex items-center shrink-0">
             <button
@@ -77,7 +77,7 @@ export function CheckActionButton({
               onClick={onRetry}
               className="w-full sm:w-auto py-2 sm:py-1.5 px-4 sm:px-3.5 rounded-xl border border-google-grey-300 dark:border-google-grey-700 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 active:scale-95 text-google-grey-700 dark:text-google-grey-200 text-xs sm:text-sm font-medium cursor-pointer transition-all flex items-center justify-center"
             >
-              Coba Lagi
+              Try Again
             </button>
           </div>
         ) : (
@@ -87,7 +87,7 @@ export function CheckActionButton({
               onClick={onNext}
               className="w-full sm:w-auto py-2 sm:py-1.5 px-4 sm:px-3.5 rounded-xl bg-google-blue-600 hover:bg-google-blue-700 active:scale-95 text-white font-medium text-xs sm:text-sm cursor-pointer transition-all shadow-xs flex items-center justify-center gap-1.5"
             >
-              <span>Lanjut</span>
+              <span>Next</span>
               <ArrowForwardIcon className="w-4 h-4" />
             </button>
           </div>
@@ -107,7 +107,7 @@ export function CheckActionButton({
       type="button"
       onClick={onCheck}
       disabled={isLoading || isAiBusy}
-      aria-label="Periksa Hasil Tulisan"
+      aria-label="Check Drawing"
       className={cn(
         "fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-20",
         "flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3",
@@ -123,29 +123,29 @@ export function CheckActionButton({
       {isLoading ? (
         <>
           <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin shrink-0" />
-          <span>Memeriksa...</span>
+          <span>Checking...</span>
         </>
       ) : isDownloading ? (
         <>
           <span className="inline-block w-4 h-4 border-2 border-google-blue-600/30 border-t-google-blue-600 rounded-full animate-spin shrink-0" />
           <span className="sm:hidden">
-            Mengunduh AI ({aiProgress.progress}%)
+            Downloading AI ({aiProgress.progress}%)
           </span>
           <span className="hidden sm:inline">
-            Mengunduh AI ({aiProgress.progress}% · {aiProgress.receivedMB}/{aiProgress.totalMB} MB)
+            Downloading AI ({aiProgress.progress}% · {aiProgress.receivedMB}/{aiProgress.totalMB} MB)
           </span>
         </>
       ) : isCompiling ? (
         <>
           <span className="inline-block w-4 h-4 border-2 border-google-blue-600/30 border-t-google-blue-600 rounded-full animate-spin shrink-0" />
-          <span>Menyiapkan AI...</span>
+          <span>Preparing AI...</span>
         </>
       ) : isError ? (
-        <span>AI Gagal Dimuat</span>
+        <span>Failed to Load AI</span>
       ) : (
         <>
           <CheckIcon className="w-5 h-5" />
-          <span>Periksa</span>
+          <span>Check</span>
         </>
       )}
     </button>

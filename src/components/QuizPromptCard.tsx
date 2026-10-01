@@ -71,7 +71,7 @@ export function QuizPromptCard({
                   : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
               )}
             >
-              Acak
+              Random
             </button>
             <button
               type="button"
@@ -83,15 +83,15 @@ export function QuizPromptCard({
                   : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
               )}
             >
-              Kosakata ({availableVocabCount})
+              Vocabulary ({availableVocabCount})
             </button>
           </div>
         </div>
 
         <p className="text-xs text-center text-google-grey-600 dark:text-google-grey-300 py-1 font-medium">
           {isVocabEmpty
-            ? "Belum ada kosakata dari kombinasi huruf ini. Buka lebih banyak huruf di deck kanan atas!"
-            : "Pilih huruf di deck kanan atas untuk mulai latihan."}
+            ? "No vocabulary available for this combination. Unlock more kana in the top-right deck!"
+            : "Select characters from the deck to start practicing."}
         </p>
       </div>
     );
@@ -123,7 +123,7 @@ export function QuizPromptCard({
                 : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
             )}
           >
-            Acak
+            Random
           </button>
           <button
             type="button"
@@ -135,7 +135,7 @@ export function QuizPromptCard({
                 : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
             )}
           >
-            Kosakata ({availableVocabCount})
+            Vocabulary ({availableVocabCount})
           </button>
         </div>
 
@@ -143,7 +143,7 @@ export function QuizPromptCard({
         {quizType === "chars" && (
           <div className="flex items-center gap-1 sm:gap-1.5 ml-0.5 sm:ml-1">
             <span className="hidden sm:inline text-[11px] text-google-grey-500 dark:text-google-grey-400 font-medium">
-              Panjang:
+              Length:
             </span>
             <div className="flex items-center gap-0.5 bg-google-grey-100 dark:bg-google-grey-900 p-0.5 rounded-lg border border-google-grey-200/60 dark:border-google-grey-700/60">
               {[2, 3, 4, 5].map((cnt) => (
@@ -171,8 +171,8 @@ export function QuizPromptCard({
           <button
             type="button"
             onClick={speakPrompt}
-            title="Dengarkan Suara (Audio)"
-            aria-label="Dengarkan pengucapan"
+            title="Pronounce (Audio)"
+            aria-label="Pronounce audio"
             className="w-7 h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
           >
             <VolumeUpIcon className="w-4 h-4" />
@@ -182,8 +182,8 @@ export function QuizPromptCard({
           <button
             type="button"
             onClick={onToggleHint}
-            title={showHint ? "Sembunyikan Bantuan" : "Lihat Bantuan Huruf"}
-            aria-label="Lihat bantuan huruf"
+            title={showHint ? "Hide Hint" : "Show Kana Hint"}
+            aria-label="Show kana hint"
             className={cn(
               "w-7 h-7 flex items-center justify-center rounded-lg transition-all cursor-pointer",
               showHint
@@ -198,8 +198,8 @@ export function QuizPromptCard({
           <button
             type="button"
             onClick={onNextQuestion}
-            title="Ganti Soal (Acak)"
-            aria-label="Soal berikutnya"
+            title="Next Prompt (Shuffle)"
+            aria-label="Next prompt"
             className="w-7 h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
           >
             <ShuffleIcon className="w-4 h-4" />
