@@ -1,9 +1,20 @@
+import * as React from "react";
 import * as ort from "onnxruntime-web";
 import type { Stroke } from "@/components/DrawingCanvas";
 
 // Configure ONNX Runtime Web
 ort.env.wasm.numThreads = 1;
 ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/";
+
+export type AiLoadingStatus = "idle" | "downloading" | "compiling" | "ready" | "error";
+
+export interface AiLoadingProgress {
+  status: AiLoadingStatus;
+  progress: number; // 0..100
+  receivedMB: string;
+  totalMB: string;
+  error?: string;
+}
 
 export interface CharacterRecognitionResult {
   expectedChar: string;
@@ -32,11 +43,158 @@ let confusableMap: Map<string, Set<string>> | null = null;
 let isInitializing = false;
 let initPromise: Promise<void> | null = null;
 
+// Progress tracking & subscribers
+type ProgressListener = (progress: AiLoadingProgress) => void;
+const progressListeners = new Set<ProgressListener>();
+
+let currentProgress: AiLoadingProgress = {
+  status: "idle",
+  progress: 0,
+  receivedMB: "0.0",
+  totalMB: "14.5",
+};
+
+export function getAiLoadingProgress(): AiLoadingProgress {
+  return currentProgress;
+}
+
+export function subscribeAiLoadingProgress(listener: ProgressListener): () => void {
+  progressListeners.add(listener);
+  listener(currentProgress);
+  return () => {
+    progressListeners.delete(listener);
+  };
+}
+
+function updateProgress(update: Partial<AiLoadingProgress>) {
+  currentProgress = { ...currentProgress, ...update };
+  for (const listener of progressListeners) {
+    listener(currentProgress);
+  }
+}
+
+export function useAiLoadingProgress(): AiLoadingProgress {
+  return React.useSyncExternalStore(
+    subscribeAiLoadingProgress,
+    getAiLoadingProgress,
+    getAiLoadingProgress,
+  );
+}
+
+const CACHE_NAME = "kadle-ai-cache-v1";
+const MODEL_URL = "/model.fp16.onnx";
+
+/**
+ * Downloads model.fp16.onnx with streaming progress and stores into CacheStorage.
+ */
+async function fetchModelBufferWithProgress(): Promise<ArrayBuffer> {
+  // 1. Try Cache API first for instant load on repeat visits
+  if (typeof window !== "undefined" && "caches" in window) {
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      const cachedResponse = await cache.match(MODEL_URL);
+      if (cachedResponse) {
+        updateProgress({
+          status: "compiling",
+          progress: 100,
+          receivedMB: "14.5",
+          totalMB: "14.5",
+        });
+        return await cachedResponse.arrayBuffer();
+      }
+    } catch (e) {
+      console.warn("Cache API lookup failed, falling back to network fetch:", e);
+    }
+  }
+
+  // 2. Fetch from network with streaming progress
+  updateProgress({
+    status: "downloading",
+    progress: 0,
+    receivedMB: "0.0",
+    totalMB: "14.5",
+  });
+
+  const response = await fetch(MODEL_URL);
+  if (!response.ok) {
+    throw new Error(`Gagal mengunduh model.fp16.onnx (${response.status})`);
+  }
+
+  const contentLength = response.headers.get("content-length");
+  const totalBytes = contentLength ? parseInt(contentLength, 10) : 15249584; // ~14.5 MB
+  const totalMB = (totalBytes / (1024 * 1024)).toFixed(1);
+
+  if (!response.body) {
+    const buf = await response.arrayBuffer();
+    return buf;
+  }
+
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let receivedBytes = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    chunks.push(value);
+    receivedBytes += value.length;
+
+    const progress = Math.min(100, Math.round((receivedBytes / totalBytes) * 100));
+    const receivedMB = (receivedBytes / (1024 * 1024)).toFixed(1);
+
+    updateProgress({
+      status: "downloading",
+      progress,
+      receivedMB,
+      totalMB,
+    });
+  }
+
+  // Combine chunks into single ArrayBuffer
+  const fullBuffer = new Uint8Array(receivedBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    fullBuffer.set(chunk, offset);
+    offset += chunk.length;
+  }
+
+  // 3. Cache the downloaded model in CacheStorage for future instant loads
+  if (typeof window !== "undefined" && "caches" in window) {
+    try {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(
+        MODEL_URL,
+        new Response(fullBuffer.buffer.slice(0), {
+          headers: {
+            "Content-Type": "application/octet-stream",
+            "Content-Length": String(receivedBytes),
+          },
+        }),
+      );
+    } catch (e) {
+      console.warn("Failed to cache model in Cache API:", e);
+    }
+  }
+
+  updateProgress({
+    status: "compiling",
+    progress: 100,
+    receivedMB: totalMB,
+    totalMB,
+  });
+
+  return fullBuffer.buffer;
+}
+
 /**
  * Initialize model and labels if not already loaded.
  */
 export async function initAiEngine(): Promise<void> {
-  if (session && labels) return;
+  if (session && labels) {
+    updateProgress({ status: "ready", progress: 100 });
+    return;
+  }
   if (initPromise) return initPromise;
 
   initPromise = (async () => {
@@ -67,18 +225,27 @@ export async function initAiEngine(): Promise<void> {
         // Confusables optional
       }
 
-      // Load ONNX model buffer
-      const modelRes = await fetch("/model.fp16.onnx");
-      if (!modelRes.ok) throw new Error("Gagal mengunduh model.fp16.onnx");
-      const modelBuffer = await modelRes.arrayBuffer();
+      // Download / read from Cache API
+      const modelBuffer = await fetchModelBufferWithProgress();
 
       // Create ONNX session from buffer
       session = await ort.InferenceSession.create(modelBuffer, {
         executionProviders: ["wasm"],
         graphOptimizationLevel: "all",
       });
+
+      updateProgress({
+        status: "ready",
+        progress: 100,
+        receivedMB: currentProgress.totalMB,
+        totalMB: currentProgress.totalMB,
+      });
     } catch (err) {
       initPromise = null;
+      updateProgress({
+        status: "error",
+        error: err instanceof Error ? err.message : "Gagal memuat AI",
+      });
       throw err;
     } finally {
       isInitializing = false;

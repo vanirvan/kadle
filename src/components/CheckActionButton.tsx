@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
 import { CheckIcon, ArrowForwardIcon } from "@/components/Icon";
 import type { QuizFeedback } from "@/hooks/useKanaQuiz";
+import type { AiLoadingProgress } from "@/services/aiEngine";
 
 export interface CheckActionButtonProps {
   feedback: QuizFeedback | null;
   isLoading?: boolean;
+  aiProgress?: AiLoadingProgress;
   onCheck: () => void;
   onNext: () => void;
   onRetry?: () => void;
@@ -14,6 +16,7 @@ export interface CheckActionButtonProps {
 export function CheckActionButton({
   feedback,
   isLoading = false,
+  aiProgress,
   onCheck,
   onNext,
   onRetry,
@@ -93,28 +96,52 @@ export function CheckActionButton({
     );
   }
 
+  const isAiReady = !aiProgress || aiProgress.status === "ready";
+  const isDownloading = aiProgress?.status === "downloading";
+  const isCompiling = aiProgress?.status === "compiling";
+  const isError = aiProgress?.status === "error";
+  const isAiBusy = !isAiReady;
+
   return (
     <button
       type="button"
       onClick={onCheck}
-      disabled={isLoading}
+      disabled={isLoading || isAiBusy}
       aria-label="Periksa Hasil Tulisan"
       className={cn(
         "fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-20",
         "flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3",
         isLoading
-          ? "bg-google-blue-500/80 cursor-wait"
-          : "bg-google-blue-600 hover:bg-google-blue-700 active:scale-95 cursor-pointer",
-        "text-white font-medium text-xs sm:text-sm rounded-2xl",
-        "shadow-lg shadow-google-blue-600/25 transition-all duration-200 select-none",
+          ? "bg-google-blue-500/80 text-white cursor-wait"
+          : isAiBusy
+            ? "bg-white/90 dark:bg-google-grey-800/90 border border-google-grey-200 dark:border-google-grey-700 text-google-grey-600 dark:text-google-grey-300 cursor-not-allowed shadow-md shadow-black/5 backdrop-blur-md"
+            : "bg-google-blue-600 hover:bg-google-blue-700 active:scale-95 text-white cursor-pointer shadow-lg shadow-google-blue-600/25",
+        "font-medium text-xs sm:text-sm rounded-2xl transition-all duration-200 select-none",
         className,
       )}
     >
       {isLoading ? (
         <>
-          <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin shrink-0" />
           <span>Memeriksa...</span>
         </>
+      ) : isDownloading ? (
+        <>
+          <span className="inline-block w-4 h-4 border-2 border-google-blue-600/30 border-t-google-blue-600 rounded-full animate-spin shrink-0" />
+          <span className="sm:hidden">
+            Mengunduh AI ({aiProgress.progress}%)
+          </span>
+          <span className="hidden sm:inline">
+            Mengunduh AI ({aiProgress.progress}% · {aiProgress.receivedMB}/{aiProgress.totalMB} MB)
+          </span>
+        </>
+      ) : isCompiling ? (
+        <>
+          <span className="inline-block w-4 h-4 border-2 border-google-blue-600/30 border-t-google-blue-600 rounded-full animate-spin shrink-0" />
+          <span>Menyiapkan AI...</span>
+        </>
+      ) : isError ? (
+        <span>AI Gagal Dimuat</span>
       ) : (
         <>
           <CheckIcon className="w-5 h-5" />

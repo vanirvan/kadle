@@ -6,11 +6,12 @@ import { CheckActionButton } from "@/components/CheckActionButton";
 import { useKanaDeck } from "@/hooks/useKanaDeck";
 import { useKanaQuiz } from "@/hooks/useKanaQuiz";
 
-import { evaluateDrawing, initAiEngine } from "@/services/aiEngine";
+import { evaluateDrawing, initAiEngine, useAiLoadingProgress } from "@/services/aiEngine";
 
 export function App() {
   const canvasRef = React.useRef<DrawingCanvasRef>(null);
   const [isChecking, setIsChecking] = React.useState(false);
+  const aiProgress = useAiLoadingProgress();
 
   const deck = useKanaDeck();
   const quiz = useKanaQuiz({
@@ -111,6 +112,7 @@ export function App() {
       <CheckActionButton
         feedback={quiz.feedback}
         isLoading={isChecking}
+        aiProgress={aiProgress}
         onCheck={handleCheck}
         onNext={handleNextQuestion}
         onRetry={handleRetry}
