@@ -12,7 +12,7 @@
 
 - **Zero-Latency Drawing Canvas**
   - Smooth vector stroke capture with native touch, pen, and mouse support.
-  - Floating minimal controls: **Undo** (`Ctrl+Z`), **Redo** (`Ctrl+Y`), and **Clear All**.
+  - Floating minimal controls: **Pen** (`P`), **Stroke Eraser** (`E`), **Undo** (`Ctrl+Z`), **Redo** (`Ctrl+Y`), and **Clear All**.
   - High-DPI screen auto-scaling with sub-pixel rendering.
 
 - **On-Device AI Handwriting Recognition (`onnxruntime-web`)**
