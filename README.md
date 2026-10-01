@@ -27,7 +27,7 @@
   - Automatically caches the 14.5 MB model into `window.caches` (CacheStorage), allowing sub-100ms instant loads on subsequent visits and offline use.
 
 - **Dynamic Kana Deck Selector**
-  - Customize your active practice set: toggle individual characters or full rows (*A, Ka, Sa, Ta, Na, Ha, Ma, Ya, Ra, Wa*).
+  - Customize your active practice set: toggle individual characters or full rows (_A, Ka, Sa, Ta, Na, Ha, Ma, Ya, Ra, Wa_).
   - Support for **Basic (Gojūon)**, **Dakuon/Handakuon**, and **Combination (Yōon)** characters across both **Hiragana** and **Katakana**.
   - **Strict Vocabulary Filtering**: In vocabulary mode, Kadle only generates words that can be formed using your currently selected deck.
 
@@ -66,7 +66,9 @@
 ## Getting Started
 
 ### Prerequisites
+
 Make sure you have [Bun](https://bun.sh/) installed:
+
 ```bash
 # macOS / Linux / WSL
 curl -fsSL https://bun.sh/install | bash
@@ -76,9 +78,10 @@ powershell -c "irm bun.sh/install.ps1 | iex"
 ```
 
 ### Installation
+
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/kadle.git
+git clone https://github.com/vanirvan/kadle.git
 cd kadle
 
 # Install dependencies
@@ -86,15 +89,19 @@ bun install
 ```
 
 ### Running Locally
+
 ```bash
 bun run dev
 ```
+
 Open `http://localhost:5173` in your browser.
 
 ### Building for Production
+
 ```bash
 bun run build
 ```
+
 Static production files will be output to the `dist/` directory.
 
 > [!TIP]
