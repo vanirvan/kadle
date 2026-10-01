@@ -50,22 +50,22 @@ export function QuizPromptCard({
       <div
         className={cn(
           "fixed top-14 sm:top-16 lg:top-5 left-1/2 -translate-x-1/2 z-20",
-          "w-[92vw] max-w-sm sm:max-w-md",
+          "w-max max-w-[calc(100vw-1.5rem)] sm:max-w-lg",
           "bg-white/95 dark:bg-google-grey-800/95 backdrop-blur-md",
           "border border-google-grey-200 dark:border-google-grey-700",
           "shadow-lg shadow-black/5 dark:shadow-black/20",
-          "rounded-2xl p-3 sm:p-4 flex flex-col items-center gap-2.5 select-none",
+          "rounded-2xl p-2 sm:p-4 flex flex-col items-center gap-2 select-none",
           className,
         )}
       >
         {/* Switcher so user is never trapped */}
         <div className="flex items-center justify-between w-full text-xs">
-          <div className="inline-flex items-center p-0.5 rounded-full bg-google-grey-100 dark:bg-google-grey-900 border border-google-grey-200/60 dark:border-google-grey-700/60">
+          <div className="inline-flex items-center p-0.5 rounded-full bg-google-grey-100 dark:bg-google-grey-900 border border-google-grey-200/60 dark:border-google-grey-700/60 shrink-0">
             <button
               type="button"
               onClick={() => onQuizTypeChange("chars")}
               className={cn(
-                "px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer transition-all",
+                "px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium cursor-pointer transition-all whitespace-nowrap shrink-0",
                 quizType === "chars"
                   ? "bg-white dark:bg-google-grey-700 text-google-blue-600 dark:text-google-blue-300 shadow-xs font-semibold"
                   : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
@@ -77,7 +77,7 @@ export function QuizPromptCard({
               type="button"
               onClick={() => onQuizTypeChange("vocab")}
               className={cn(
-                "px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer transition-all",
+                "px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium cursor-pointer transition-all whitespace-nowrap shrink-0",
                 quizType === "vocab"
                   ? "bg-white dark:bg-google-grey-700 text-google-blue-600 dark:text-google-blue-300 shadow-xs font-semibold"
                   : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
@@ -101,23 +101,23 @@ export function QuizPromptCard({
     <div
       className={cn(
         "fixed top-14 sm:top-16 lg:top-5 left-1/2 -translate-x-1/2 z-20",
-        "w-[92vw] max-w-sm sm:max-w-md",
+        "w-max max-w-[calc(100vw-1.5rem)] sm:max-w-lg",
         "bg-white/95 dark:bg-google-grey-800/95 backdrop-blur-md",
         "border border-google-grey-200 dark:border-google-grey-700",
-        "rounded-2xl p-3 sm:p-4 shadow-xl shadow-black/5 dark:shadow-black/30",
+        "rounded-2xl p-2 sm:p-4 shadow-xl shadow-black/5 dark:shadow-black/30",
         "flex flex-col gap-2.5 transition-all duration-200 select-none",
         className,
       )}
     >
       {/* Top Bar: Controls & Mode Switcher */}
-      <div className="flex items-center justify-between gap-1 text-xs">
+      <div className="flex items-center justify-between gap-1 sm:gap-2.5 text-xs w-full">
         {/* Quiz Type Toggle */}
-        <div className="inline-flex items-center p-0.5 rounded-full bg-google-grey-100 dark:bg-google-grey-900 border border-google-grey-200/60 dark:border-google-grey-700/60">
+        <div className="inline-flex items-center p-0.5 rounded-full bg-google-grey-100 dark:bg-google-grey-900 border border-google-grey-200/60 dark:border-google-grey-700/60 shrink-0">
           <button
             type="button"
             onClick={() => onQuizTypeChange("chars")}
             className={cn(
-              "px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer",
+              "px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0",
               quizType === "chars"
                 ? "bg-white dark:bg-google-grey-700 text-google-blue-600 dark:text-google-blue-300 shadow-xs font-semibold"
                 : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
@@ -129,7 +129,7 @@ export function QuizPromptCard({
             type="button"
             onClick={() => onQuizTypeChange("vocab")}
             className={cn(
-              "px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer",
+              "px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0",
               quizType === "vocab"
                 ? "bg-white dark:bg-google-grey-700 text-google-blue-600 dark:text-google-blue-300 shadow-xs font-semibold"
                 : "text-google-grey-600 dark:text-google-grey-400 hover:text-google-grey-900 dark:hover:text-google-grey-100",
@@ -141,7 +141,7 @@ export function QuizPromptCard({
 
         {/* Character count selector (only in "chars" mode) */}
         {quizType === "chars" && (
-          <div className="flex items-center gap-1 sm:gap-1.5 ml-0.5 sm:ml-1">
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             <span className="hidden sm:inline text-[11px] text-google-grey-500 dark:text-google-grey-400 font-medium">
               Length:
             </span>
@@ -152,7 +152,7 @@ export function QuizPromptCard({
                   type="button"
                   onClick={() => onCharCountChange(cnt)}
                   className={cn(
-                    "w-5 h-5 flex items-center justify-center rounded-md text-xs font-mono cursor-pointer transition-all",
+                    "w-4.5 h-4.5 sm:w-5 sm:h-5 flex items-center justify-center rounded text-[11px] sm:text-xs font-mono cursor-pointer transition-all shrink-0",
                     charCount === cnt
                       ? "bg-google-blue-600 dark:bg-google-blue-500 text-white font-bold shadow-xs"
                       : "text-google-grey-600 dark:text-google-grey-400 hover:bg-google-grey-200 dark:hover:bg-google-grey-700 hover:text-google-grey-900 dark:hover:text-google-grey-100",
@@ -166,16 +166,16 @@ export function QuizPromptCard({
         )}
 
         {/* Action icons */}
-        <div className="flex items-center gap-0.5 ml-auto">
+        <div className="flex items-center gap-0.5 ml-auto shrink-0">
           {/* Audio voice pronunciation */}
           <button
             type="button"
             onClick={speakPrompt}
             title="Pronounce (Audio)"
             aria-label="Pronounce audio"
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
+            className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
           >
-            <VolumeUpIcon className="w-4 h-4" />
+            <VolumeUpIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* Hint toggle */}
@@ -185,13 +185,13 @@ export function QuizPromptCard({
             title={showHint ? "Hide Hint" : "Show Kana Hint"}
             aria-label="Show kana hint"
             className={cn(
-              "w-7 h-7 flex items-center justify-center rounded-lg transition-all cursor-pointer",
+              "w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg transition-all cursor-pointer",
               showHint
                 ? "bg-google-yellow-100 dark:bg-google-yellow-900/50 text-google-yellow-700 dark:text-google-yellow-300 border border-google-yellow-300 dark:border-google-yellow-700/60"
                 : "text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700",
             )}
           >
-            <LightbulbIcon className="w-4 h-4" />
+            <LightbulbIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* Shuffle / Next */}
@@ -200,9 +200,9 @@ export function QuizPromptCard({
             onClick={onNextQuestion}
             title="Next Prompt (Shuffle)"
             aria-label="Next prompt"
-            className="w-7 h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
+            className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg text-google-grey-600 dark:text-google-grey-300 hover:bg-google-grey-100 dark:hover:bg-google-grey-700 transition-all cursor-pointer"
           >
-            <ShuffleIcon className="w-4 h-4" />
+            <ShuffleIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </div>
