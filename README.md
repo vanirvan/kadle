@@ -1,61 +1,83 @@
-# Kadle: Kana Doodle 🎌
+# Kadle: Kana Doodle
 
-> **Kadle** (Kana + Doodle) adalah aplikasi latihan menulis huruf Jepang (Hiragana & Katakana) interaktif yang ditenagai oleh model AI *handwriting recognition* langsung di browser pengguna (*client-side*).
+> **Kadle** (Kana + Doodle) is an interactive, privacy-first Japanese handwriting practice web application powered by client-side AI handwriting recognition.
 
----
-
-## ✨ Fitur Utama
-
-- ✍️ **Interactive Drawing Canvas**
-  - Kanvas menulis yang mulus, responsif, dan bebas latensi.
-  - Mendukung input mouse, stylus, dan layar sentuh (mobile/tablet).
-  - Kontrol floating minimalis: *Undo*, *Redo*, dan *Clear Canvas*.
-
-- 🧠 **Client-Side AI Recognition (`onnxruntime-web`)**
-  - Ditenagai model ResNet FP16 (3.082 kelas JIS X 0208 Kanji + Kana).
-  - Inferensi berjalan 100% di browser pengguna via WebAssembly (WASM)—tanpa backend, hemat biaya server, dan *privacy-first*.
-  - Pemisahan goresan berbasis *hierarchical stroke clustering* untuk mengevaluasi kata multi-karakter dari kiri ke kanan.
-  - Normalisasi goresan otomatis dengan dukungan goresan titik tunggal (*single-point dots* untuk dakuten/tenten).
-
-- ⚡ **Streaming Download & Offline CacheStorage**
-  - Pelacakan progress unduhan model AI secara real-time via Web Streams API (`ReadableStream`).
-  - Proteksi tombol *Periksa* otomatis terkunci (*disabled*) hingga model siap digunakan.
-  - Hasil unduhan model otomatis disimpan ke `window.caches` (*Cache API*), membuat kunjungan berikutnya instan (~0.1 detik) bahkan saat offline.
-
-- 🗂️ **Kustomisasi Kana Deck Fleksibel**
-  - Pilih huruf Hiragana atau Katakana yang ingin dipelajari per karakter atau per baris (*A, Ka, Sa, Ta, Na, Ha, Ma, Ya, Ra, Wa*).
-  - Filter kosakata ketat: Kuis hanya akan memunculkan kata yang seluruh hurufnya ada di deck aktif pengguna.
-
-- 🎯 **Mode Kuis & Kosakata Pintar**
-  - Opsi kuis: **Acak** (karakter tunggal/acak) atau **Kosakata** (kata bahasa Jepang bermakna).
-  - Pengaturan panjang kata fleksibel (2, 3, 4, atau 5 karakter).
-  - Fitur intip bantuan (*hint/romaji*) dan pengucapan suara (*speech synthesis*).
-
-- 📱 **Mobile-First & Google Material Design**
-  - UI clean, modern, dan floating controls terinspirasi dari Google Design System.
-  - Desain toast hasil evaluasi yang ergonomis untuk penggunaan satu tangan di perangkat mobile.
+<p align="center">
+  <img src="public/preview-hero.png" alt="Kadle Application Preview" width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);" />
+</p>
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-- **Framework**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- **Bundler & Build**: [Vite](https://vite.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **AI Runtime**: [ONNX Runtime Web](https://onnxruntime.ai/) (`onnxruntime-web`)
+- **Zero-Latency Drawing Canvas**
+  - Smooth vector stroke capture with native touch, pen, and mouse support.
+  - Floating minimal controls: **Undo** (`Ctrl+Z`), **Redo** (`Ctrl+Y`), and **Clear All**.
+  - High-DPI screen auto-scaling with sub-pixel rendering.
+
+- **On-Device AI Handwriting Recognition (`onnxruntime-web`)**
+  - Powered by a ResNet FP16 model trained on JIS X 0208 (3,082 classes including Hiragana, Katakana, and Kanji).
+  - **100% Client-Side**: Inference runs directly in your browser via WebAssembly (WASM)—no backend server, zero API costs, and complete privacy.
+  - **Hierarchical Stroke Clustering**: Automatically segments and normalizes multi-character handwriting from left to right.
+  - **Single-Point Dot Support**: Accurately recognizes punctuation dots and dakuten (`゛`, `゜`) strokes.
+
+- **Live Download Tracking & CacheStorage Persistence**
+  - Live download progress tracking via Web Streams API (`ReadableStream`).
+  - Action button displays real-time download status (e.g. `Downloading AI (45% · 6.5/14.5 MB)`).
+  - Automatically caches the 14.5 MB model into `window.caches` (CacheStorage), allowing sub-100ms instant loads on subsequent visits and offline use.
+
+- **Dynamic Kana Deck Selector**
+  - Customize your active practice set: toggle individual characters or full rows (*A, Ka, Sa, Ta, Na, Ha, Ma, Ya, Ra, Wa*).
+  - Support for **Basic (Gojūon)**, **Dakuon/Handakuon**, and **Combination (Yōon)** characters across both **Hiragana** and **Katakana**.
+  - **Strict Vocabulary Filtering**: In vocabulary mode, Kadle only generates words that can be formed using your currently selected deck.
+
+<p align="center">
+  <img src="public/preview-deck.png" alt="Deck Selector Modal" width="80%" style="border-radius: 12px; margin: 16px 0;" />
+</p>
+
+- **Smart Quiz Game Loop**
+  - **Random Mode**: Practice arbitrary Kana strings with configurable word lengths (2 to 5 characters).
+  - **Vocabulary Mode**: Practice real Japanese words (with English meanings).
+  - **Kana Hint Toggle**: Peek at the actual Kana characters when you need help.
+
+- **Informative Feedback Without Spoiling**
+  - AI pinpoints which character was mismatched (e.g., `AI recognized character #1 as 'か'.`) without leaking the target answer.
+  - User-driven retry loop: focuses on repetition until mastery.
+
+<p align="center">
+  <img src="public/preview-evaluation.png" alt="AI Evaluation Toast Feedback" width="80%" style="border-radius: 12px; margin: 16px 0;" />
+</p>
+
+---
+
+## Tech Stack
+
+- **Frontend**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vite.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) + [Tailwind Animate](https://github.com/jamiebuilds/tailwindcss-animate)
+- **UI Primitives**: [@base-ui/react](https://base-ui.com/) (accessible headless Dialog, Toolbar, Tabs, Tooltip)
+- **AI Runtime**: [ONNX Runtime Web](https://onnxruntime.ai/) (`onnxruntime-web@1.20.1` WASM)
+- **Icons & Typography**: Material Symbols Outlined + Google Sans / Noto Sans JP
 - **Linter**: [Oxlint](https://oxc.rs/)
 - **Package Manager**: [Bun](https://bun.sh/)
 
 ---
 
-## 🚀 Memulai (Local Development)
+## Getting Started
 
-### Prasyarat
-Pastikan kamu telah menginstal [Bun](https://bun.sh/) di sistem kamu.
-
-### Instalasi
+### Prerequisites
+Make sure you have [Bun](https://bun.sh/) installed:
 ```bash
-# Clone repository
+# macOS / Linux / WSL
+curl -fsSL https://bun.sh/install | bash
+
+# Windows PowerShell
+powershell -c "irm bun.sh/install.ps1 | iex"
+```
+
+### Installation
+```bash
+# Clone the repository
 git clone https://github.com/your-username/kadle.git
 cd kadle
 
@@ -63,35 +85,34 @@ cd kadle
 bun install
 ```
 
-### Menjalankan Server Development
+### Running Locally
 ```bash
 bun run dev
 ```
-Buka browser di `http://localhost:5173`.
+Open `http://localhost:5173` in your browser.
 
-### Build untuk Produksi
+### Building for Production
 ```bash
 bun run build
 ```
-File siap saji (*production assets*) akan dihasilkan di folder `dist/`.
-
----
-
-## ☁️ Panduan Deploy ke Cloudflare Pages
-
-1. Masuk ke [Cloudflare Dashboard](https://dash.cloudflare.com/) > **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-2. Pilih repository `kadle`.
-3. Atur konfigurasi build berikut:
-   - **Framework preset**: `Vite` (atau `None`)
-   - **Build command**: `bun run build` (atau `npm run build`)
-   - **Build output directory**: `dist`
-4. Klik **Save and Deploy**.
+Static production files will be output to the `dist/` directory.
 
 > [!TIP]
-> Model ONNX dan file label di folder `public/` akan otomatis di-serve oleh Cloudflare Pages dengan cache global CDN berkecepatan tinggi.
+> The ONNX model and JIS label files in `public/` are served with global CDN caching. Kadle's CacheStorage implementation ensures user browsers store the model locally on first load.
 
 ---
 
-## 📄 Lisensi
+## Roadmap
 
-Didistribusikan di bawah lisensi MIT. Silakan gunakan dan kembangkan sesuai kebutuhan.
+Features planned or currently in development:
+
+- **Audio Pronunciation**: Reliable native Japanese audio playback using bundled audio assets or dedicated TTS (replacing browser SpeechSynthesis which often fails without installed OS voice packs).
+- **Stroke Order Guidance**: Stroke animation and step-by-step stroke count validation.
+- **Spaced Repetition System (SRS)**: Accuracy tracking and scheduled reviews for difficult characters.
+- **Kanji Support**: Expanding quiz decks to common JLPT (N5–N1) Kanji characters using the model's existing JIS X 0208 recognition capabilities.
+
+---
+
+## License
+
+Distributed under the MIT License. Feel free to use and adapt this project for your own Japanese learning tools.
